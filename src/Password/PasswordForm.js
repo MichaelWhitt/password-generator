@@ -1,6 +1,7 @@
 import React from "react"
 import styles from './password.module.css'
 import copy from './copy.png'
+import check from './check.png'
 // TODO Must place more weight on symbols and capital letters
 
 export default class PasswordForm extends React.Component {
@@ -9,7 +10,8 @@ state = {
     lower: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r','s', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
     upper: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y','Z'],
     symbols: ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '='],
-    numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+    copied: false
 }
 
 handleChange = (e) => {
@@ -18,10 +20,12 @@ handleChange = (e) => {
 
 onCopy = () => {
     navigator.clipboard.writeText(this.state.password)
+    this.setState({copied: true})
 }
 
 choosePW = (max) => {
-    const {lower, upper, symbols, numbers} = this.state
+    const {lower, upper, symbols, numbers, copied} = this.state
+    if (copied) this.setState({copied: false})
     let pwCode = ''
 
     
@@ -53,13 +57,14 @@ choosePW = (max) => {
 }
 
     render(){
+        const {copied, password} = this.state
         return(
             <div className={`${styles.container}`} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <div className={`${styles.pwBox}`}>
                     <div style={{display: 'flex', marginBottom: 10}} >
-                        <input type='text' value={this.state.password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
-                        <button style={{width: '20%', marginLeft: 10}} onClick={this.onCopy}>
-                            <img src={copy} alt="copy" width={20} height={20}/>
+                        <input type='text' value={password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
+                        <button style={{width: '20%', marginLeft: 10, padding: 0, background: '#000', boxShadow: '0 0 5px #666'}} onClick={this.onCopy}>
+                            <img src={copied ? check: copy} alt="copy" width={40} height={40}/>
                         </button>
                     </div>
                     <button style={{marginBottom: 10}} onClick={() => this.choosePW(8)}> 8 Digit Password</button>
