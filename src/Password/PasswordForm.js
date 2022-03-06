@@ -1,5 +1,6 @@
 import React from "react"
 import styles from './password.module.css'
+import copy from './copy.png'
 // TODO Must place more weight on symbols and capital letters
 
 export default class PasswordForm extends React.Component {
@@ -20,7 +21,7 @@ onCopy = () => {
 }
 
 choosePW = (max) => {
-    const {lower, upper, symbols, numbers, password} = this.state
+    const {lower, upper, symbols, numbers} = this.state
     let pwCode = ''
 
     
@@ -55,11 +56,15 @@ choosePW = (max) => {
         return(
             <div className={`${styles.container}`} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <div className={`${styles.pwBox}`}>
-                    <input type='text' value={this.state.password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
-                    <button style={{width: '20%'}} onClick={this.onCopy}>Copy</button>
-                    <button onClick={() => this.choosePW(8)}>Generate 8 Digit Password</button>
-                    <button onClick={() => this.choosePW(10)}>Generate 10 Digit Password</button>
-                    <button onClick={() => this.choosePW(12)}>Generate 12 Digit Password</button>
+                    <div style={{display: 'flex', marginBottom: 10}} >
+                        <input type='text' value={this.state.password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
+                        <button style={{width: '20%', marginLeft: 10}} onClick={this.onCopy}>
+                            <img src={copy} alt="copy" width={20} height={20}/>
+                        </button>
+                    </div>
+                    <button style={{marginBottom: 10}} onClick={() => this.choosePW(8)}> 8 Digit Password</button>
+                    <button style={{marginBottom: 10}} onClick={() => this.choosePW(10)}> 10 Digit Password</button>
+                    <button onClick={() => this.choosePW(12)}> 12 Digit Password</button>
                 </div>
             </div>
         )
