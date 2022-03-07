@@ -3,7 +3,6 @@ import styles from './password.module.css'
 import copy from './copy.png'
 import check from './check.png'
 import video from './Triangles_01.mp4'
-// TODO Must place more weight on symbols and capital letters
 
 export default class PasswordForm extends React.Component {
 state = {
@@ -28,11 +27,6 @@ choosePW = (max) => {
     const {lower, upper, symbols, numbers, copied} = this.state
     if (copied) this.setState({copied: false})
     let pwCode = ''
-
-    
-    // if pw === 8 lower, upper, lower, sym, num, sym, upper
-    // if pw === 10 lower, upper, lower, sym, num, sym, upper, num, lower, upper
-    // if pw === 12 lower, upper, lower, sym, num, sym, upper, lower, num, upper, sym, lower
 
     for (let i = 0; i < max; i++){
         let choice = Math.floor(Math.random() * 4) +1
@@ -60,28 +54,32 @@ choosePW = (max) => {
     render(){
         const {copied, password} = this.state
         return(
-            <div style={{zIndex: 0}}>
+            <div>
             <video autoPlay muted loop id="myVid" className={`${styles.video}`}>
                 <source src={video} type='video/mp4'/>
             </video>
             <div className={`${styles.container}`}>
                 <div className={`${styles.pwBox}`}>
-                    <div style={{fontSize: 20, marginBottom: 50}}>Secure Password Generator</div>
-                    <div style={{display: 'flex', marginBottom: 10}} >
-                        <input type='text' value={password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
-                        <button style={{width: '20%', marginLeft: 10, padding: 0, background: '#000', boxShadow: '0 0 5px #666'}} onClick={this.onCopy}>
-                            <img src={copied ? check: copy} alt="copy" width={40} height={40}/>
-                        </button>
-                    </div>
-                    <button style={{marginBottom: 10}} onClick={() => this.choosePW(8)}> 8 Digit Password</button>
-                    <button style={{marginBottom: 10}} onClick={() => this.choosePW(10)}> 10 Digit Password</button>
-                    <button onClick={() => this.choosePW(12)}> 12 Digit Password</button>
-                    <div style={{marginTop: 30, fontSize: 15, fontWeight: 600}}>Instructions:</div>
-                    {
-                        !copied && !password ? <div style={{marginTop: 10}}>Click a button to generate a password</div>:
-                        password && !copied ? <div style={{marginTop: 10}}>Click the copy icon</div> :
-                        <div style={{marginTop: 10}}><span style={{color: 'red'}}>Copied to clipboard!</span> Use Ctrl + V or CMD + V to paste</div>
-                    }
+                    <div style={{display: 'flex', flexDirection: 'column', width: 400}}>
+                        <div style={{fontSize: 30, marginBottom: 30, textAlign: 'center'}}>Secure Password Generator</div>
+                        <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center'}} >
+                            <input type='text' value={password} onChange={this.handleChange} className={`${styles.pwDisplay} password-display`}/>
+                            <button className={`${ password && !copied ? styles.copyBtnGuide : styles.copyBtn}`} onClick={this.onCopy}>
+                                <img src={copied ? check: copy} alt="copy" width={30} height={30}/>
+                            </button>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                            <button style={{marginBottom: 10}} onClick={() => this.choosePW(8)}> 8 Digit Password</button>
+                            <button style={{marginBottom: 10}} onClick={() => this.choosePW(10)}> 10 Digit Password</button>
+                            <button onClick={() => this.choosePW(12)}> 12 Digit Password</button>
+                        </div>
+                        <div style={{marginTop: 30, fontSize: 15, fontWeight: 600}}>Instructions:</div>
+                        {
+                            !copied && !password ? <div style={{marginTop: 10}}>Click a button to generate a password</div>:
+                            password && !copied ? <div style={{marginTop: 10}}>Click the copy icon</div> :
+                            <div style={{marginTop: 10}}><span style={{color: 'red'}}>Copied to clipboard!</span> Use Ctrl + V or CMD + V to paste</div>
+                        }
+                </div>
                 </div>
             </div>
             </div>
