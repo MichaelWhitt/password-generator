@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Getting Started with Password Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
+
+I wanted to practice a little Javascript and React by creating a random password generator. 
+
+The app is continuously deployed from this repo at (www.mw-password-generator.netlify.com) 
 
 ## Available Scripts
 
